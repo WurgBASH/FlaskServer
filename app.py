@@ -2,7 +2,7 @@ import threading,os,sys,socket
 import time
 from flask import Flask, Response, redirect, request, url_for, jsonify,render_template
 
-users= [{}]
+users= []
 app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def add_message():
