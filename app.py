@@ -8,7 +8,7 @@ app = Flask(__name__)
 def add_message():
 	if request.method == "POST":
 		content = request.json
-		users[text2] = content['message']
+		users[content['first_name']] = content['message']
 		return render_template('index.html', users=users)
 	else:
 		return render_template('index.html', users=users)
