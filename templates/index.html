@@ -6,6 +6,10 @@
 
 <div id="data">
 
-<div class= "container"><p>{{text}}</p></div>	
+
+{% for key, value in users.items() %}
+      <h1>Key: {{key}}</h1>
+      <h2>Value: {{value}}</h2>
+{% endfor %}
 
 </div>
