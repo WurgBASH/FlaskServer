@@ -10,9 +10,9 @@ def add_message():
 	if request.method == "POST":
 		content = request.json
 		text1=content['mytext']
-		return render_template('hello.html', text=text1)
+		return render_template('index.html', text=text1)
 	else:
-		return render_template('hello.html', text=text1)
+		return render_template('index.html', text=text1)
 
 if __name__ == '__main__':
 	app.run()
