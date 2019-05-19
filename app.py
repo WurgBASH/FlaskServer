@@ -3,14 +3,6 @@ import time
 from flask import Flask, Response, redirect, request, url_for, jsonify,render_template, make_response
 
 
-TOKEN = "710118383:AAFJuBvAtwZ4yWvkjdmBGL6pZb6ocP4e0S4"
-PORT = int(os.environ.get('PORT', '8445'))
-
-
-updater = Updater(token=TOKEN)
-dispatcher = updater.dispatcher
-translator = Translator()
-
 msg_RESPONSE = 'ADESQ#$@#s'
 name_RESPONSE = 'None'
 
@@ -18,9 +10,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-	updater.start_webhook(listen="0.0.0.0", port=PORT, url_path=TOKEN)
-	updater.bot.set_webhook("https://flaskappprogram.herokuapp.com/" + TOKEN)
-	updater.idle()
 	return render_template('index.html')
 @app.route('/messages',methods=['GET'])
 def add_message():
