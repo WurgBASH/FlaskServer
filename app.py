@@ -29,10 +29,12 @@ def index():
 
 @app.route('/getJSONfromBot',methods=['POST'])
 def json_handle():
+	print('json_handle was started')
 	if request.method == 'POST':
 		print (request.is_json)
 		content = request.get_json()
 		print (content)
+		return render_template('index.html')
 
 if __name__ == '__main__':
 	app.run()
