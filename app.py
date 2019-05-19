@@ -13,19 +13,20 @@ def index():
 	return render_template('index.html')
 @app.route('/messages',methods=['GET'])
 def add_message():
-	print('messages was started')
-	if (request.headers.get('accept') == 'text/event-stream'):
-		def events():
-			global msg_RESPONSE
-			global name_RESPONSE
-			global dex
-			while dex==True:
-				time.sleep(1)
-			yield "data:{\"user_message\":\""+msg_RESPONSE+"\","+"\"user_name\":\""+name_RESPONSE+"\"}\n\n"
-			msg_RESPONSE='ADESQ#$@#s'
-			dex = True
-		return Response(events(), content_type='text/event-stream')
-	return redirect(url_for('static', filename='messages.html'))
+	if request.method == 'GET':
+		print('messages was started')
+		if (request.headers.get('accept') == 'text/event-stream'):
+			def events():
+				global msg_RESPONSE
+				global name_RESPONSE
+				global dex
+				while dex==True:
+					time.sleep(1)
+				yield "data:{\"user_message\":\""+msg_RESPONSE+"\","+"\"user_name\":\""+name_RESPONSE+"\"}\n\n"
+				msg_RESPONSE='ADESQ#$@#s'
+				dex = True
+			return Response(events(), content_type='text/event-stream')
+		return redirect(url_for('static', filename='messages.html'))
 
 @app.route('/getJSONfromBot',methods=['POST'])
 def json_handle():
