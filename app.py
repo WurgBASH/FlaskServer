@@ -21,15 +21,11 @@ def handle_message1(bot, update):
 dispatcher.add_handler(MessageHandler(Filters.text, handle_message1))
 
 app = Flask(__name__)
+
 @app.route('/')
-def hello():
-	return 'hello'
-@app.route('/test')
 def add_message():
 	global text
-	updater.start_webhook(listen="0.0.0.0", port=PORT, url_path=TOKEN)
-	updater.bot.set_webhook("https://flaskappprogram.herokuapp.com/" + TOKEN)
-	updater.idle()
+	updater.start_polling()
 
 	if request.headers.get('accept') == 'text/event-stream':
 		def events():
