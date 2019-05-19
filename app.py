@@ -108,10 +108,10 @@ app = Flask(__name__)
 
 
 def test():
-	updater.start_webhook(listen="0.0.0.0", port=PORT, url_path=TOKEN)
-	updater.bot.set_webhook("https://flaskappprogram.herokuapp.com/" + TOKEN)
-	updater.idle()
-	#updater.start_polling()
+	# updater.start_webhook(listen="0.0.0.0", port=PORT, url_path=TOKEN)
+	# updater.bot.set_webhook("https://flaskappprogram.herokuapp.com/" + TOKEN)
+	# updater.idle()
+	updater.start_polling()
 	
 @app.route('/')
 def index():
