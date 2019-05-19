@@ -29,9 +29,10 @@ def add_message():
 
 @app.route('/getJSONfromBot',methods=['POST'])
 def json_handle():
-	print (request.is_json)
-	content = request.get_json()
-	print (content)
+	if request.method == 'POST':
+		print (request.is_json)
+		content = request.get_json()
+		print (content)
 
 if __name__ == '__main__':
 	app.run()
