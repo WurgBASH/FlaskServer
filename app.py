@@ -9,7 +9,7 @@ from telegram import ReplyKeyboardMarkup
 
 
 TOKEN = "710118383:AAFJuBvAtwZ4yWvkjdmBGL6pZb6ocP4e0S4"
-PORT = int(os.environ.get('PORT', '8443'))
+PORT = int(os.environ.get('PORT', '8445'))
 
 
 updater = Updater(token=TOKEN)
@@ -107,14 +107,17 @@ dispatcher.add_handler(CallbackQueryHandler(callback_query_handler))
 app = Flask(__name__)
 
 
-def test():
-	# updater.start_webhook(listen="0.0.0.0", port=PORT, url_path=TOKEN)
-	# updater.bot.set_webhook("https://flaskappprogram.herokuapp.com/" + TOKEN)
-	# updater.idle()
-	updater.start_polling()
+# def test():
+# 	updater.start_webhook(listen="0.0.0.0", port=PORT, url_path=TOKEN)
+# 	updater.bot.set_webhook("https://flaskappprogram.herokuapp.com/" + TOKEN)
+# 	updater.idle()
+# 	updater.start_polling()
 	
 @app.route('/')
 def index():
+	updater.start_webhook(listen="0.0.0.0", port=PORT, url_path=TOKEN)
+	updater.bot.set_webhook("https://flaskappprogram.herokuapp.com/" + TOKEN)
+	updater.idle()
 	return render_template('index.html')
 @app.route('/messages',methods=['GET'])
 def add_message():
@@ -134,6 +137,6 @@ def add_message():
 
 
 if __name__ == '__main__':
-	t1 = threading.Thread(target=test)
-	t1.start()
+	# t1 = threading.Thread(target=test)
+	# t1.start()
 	app.run()
