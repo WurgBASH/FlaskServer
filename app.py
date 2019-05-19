@@ -38,8 +38,8 @@ def json_handle():
 		print (request.is_json)
 		content = request.get_json()
 		print (content)
-		msg_RESPONSE = content.message_text
-		name_RESPONSE = content.user_name
+		msg_RESPONSE = content['message_text']
+		name_RESPONSE = content['user_name']
 
 if __name__ == '__main__':
 	app.run()
