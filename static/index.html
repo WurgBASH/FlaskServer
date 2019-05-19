@@ -1,15 +1,17 @@
+<!doctype html>
 <title>Server Send Events Demo</title>
-<link rel="stylesheet" href='css/style.css'>
-
-
-<h2>Chat Messages</h2>
-
-<div id="data">
-
-
-{% for key, value in users.items() %}
-      <h1>Key: {{key}}</h1>
-      <h2>Value: {{value}}</h2>
-{% endfor %}
-
-</div>
+<style>
+  #data {
+    text-align: center;
+  }
+</style>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+if (!!window.EventSource) {
+  var source = new EventSource('/');
+  source.onmessage = function(e) {
+    $("#data").append( "<li>"+e.data+"</li>" );;
+  }
+}
+</script>
+<ul id="data">All messages:</ul>
