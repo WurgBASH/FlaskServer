@@ -4,22 +4,10 @@
 <script src="{{ url_for('static', filename='jquery.js') }}"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
 <script>
-
-
         $(document).ready(function() {
-
             var socket = io.connect("https://flaskappprogram.herokuapp.com/test");
-            // Event handler for new connections.
-            // The callback function is invoked when a connection with the
-            // server is established.
-            socket.on('connect', function() {
-                socket.emit('my_event', {data: 'I\'m connected!'});
-            });
-            socket.on('my_response', function(msg, cb) {
+            socket.on('my_response', function(msg) {
                 $("#data").append( "<div class=\"container\"><p>"+msg.text+"</p><span class = \".time-right\">"+msg.user+"</span></div>");
-            });
-            socket.on('connection', function(msg, cb) {
-                console.log('con')
             });
         });
 
