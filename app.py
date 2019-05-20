@@ -11,23 +11,6 @@ app = Flask(__name__)
 @app.route('/')
 def index():
 	return render_template('index.html')
-@app.route('/messages',methods=['GET'])
-def add_message():
-	if request.method == 'GET':
-		print('messages was started')
-		if (request.headers.get('accept') == 'text/event-stream'):
-			def events():
-				global msg_RESPONSE
-				global name_RESPONSE
-				global dex
-				while dex==True:
-					time.sleep(1)
-				yield "data:{\"user_message\":\""+msg_RESPONSE+"\","+"\"user_name\":\""+name_RESPONSE+"\"}\n\n"
-				msg_RESPONSE='ADESQ#$@#s'
-				dex = True
-			return Response(events(), content_type='text/event-stream')
-		return redirect(url_for('static', filename='messages.html'))
-
 @app.route('/getJSONfromBot',methods=['POST'])
 def json_handle():
 	global msg_RESPONSE
@@ -42,6 +25,31 @@ def json_handle():
 			msg_RESPONSE = content['message_text']
 			name_RESPONSE = content['user_name']
 			dex = False
+
+@app.route('/send_message',methods=['POST'])
+def send_message():
+	if request.method == 'POST':
+		text = request.form['msg_text']
+		bot.send_message(chat_id='@lunarmax', text=text)
+
+@app.route('/messages',methods=['GET'])
+def add_message():
+	if request.method == 'GET':
+		print('messages was started')
+		if (request.headers.get('accept') == 'text/event-stream'):
+			def events():
+				global msg_RESPONSE
+				global name_RESPONSE
+				global dex
+				while dex==True:
+					time.sleep(0.1)
+				yield "data:{\"user_message\":\""+msg_RESPONSE+"\","+"\"user_name\":\""+name_RESPONSE+"\"}\n\n"
+				msg_RESPONSE='ADESQ#$@#s'
+				dex = True
+			return Response(events(), content_type='text/event-stream')
+		return redirect(url_for('static', filename='messages.html'))
+
+
 
 if __name__ == '__main__':
 	app.run()
