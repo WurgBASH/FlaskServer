@@ -19,8 +19,6 @@ var socket = io.connect('https://flaskappprogram.herokuapp.com/test');
               console.log('connected')
                   
             });
-
-
 </script>
 <p><a href="/">Home</a></p>
 
@@ -29,5 +27,10 @@ var socket = io.connect('https://flaskappprogram.herokuapp.com/test');
     <button name="forwardBtn" type="submit">Send</button>
 </form>
 <div id="data">All messages:
+	{% for key,val in db_data.items() %}
+		{% for x in val %}
+			<div class="container"><p>"{{x}}"</p><span class = ".time-right">"{{key}}"</span></div>
+			{% endfor %}
+	{% endfor %}
 </div>
 

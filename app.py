@@ -41,7 +41,21 @@ def send_message():
 @app.route('/messages',methods=['GET','POST'])
 def add_message():
 	# if request.method == 'GET':
-	return render_template('messages.html', async_mode=socketio.async_mode)
+	db_data = {}
+	res = db.messages.find()
+	for x in res:
+		nam=[]
+		for key,val in x.items():
+			if(key=='first_name'):
+				nam.append(val)
+			elif(key == 'message_text'):
+				nam.append(val)
+		if nam[0] in db_data:
+			db_data[nam[0]].append(nam[1])
+		else:
+			db_data[nam[0]] = [nam[1]]
+	
+	return render_template('messages.html', async_mode=socketio.async_mode, db_data=db_data)
 	# else:
 	# 	data = {}
 	# 	ges = db.messages.count()
