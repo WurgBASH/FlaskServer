@@ -2,14 +2,32 @@ import threading,os,sys,socket
 import time
 from flask import Flask, Response, redirect, request, url_for, jsonify,render_template, make_response
 import telegram
+import pymongo
+import logging
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                     level=logging.INFO)
 
 msg_RESPONSE = 'ADESQ#$@#s'
 name_RESPONSE = 'None'
 dex = True
 app = Flask(__name__)
+
+
 bot = telegram.Bot(token="710118383:AAFJuBvAtwZ4yWvkjdmBGL6pZb6ocP4e0S4")
+
+
+client = pymongo.MongoClient("mongodb+srv://wurg:wurg@pythonacademy-9pn3o.gcp.mongodb.net/test?retryWrites=true")
+db = client.get_database('PythonAcademy_db')
+
+
+
+
+
 @app.route('/')
 def index():
+	print(db.list_collection_names())
+
+	users = db.users.posts.insert_one({'name': 'jopa'}).inserted_id
 	return render_template('index.html')
 @app.route('/getJSONfromBot',methods=['POST'])
 def json_handle():
@@ -59,4 +77,7 @@ def add_message():
 
 
 if __name__ == '__main__':
+	print('dsd')
+
+
 	app.run()
