@@ -1,1 +1,1 @@
-gunicorn gevent -w 1 app:app
+gunicorn --worker-class socketio.sgunicorn.GeventSocketIOWorker app:app

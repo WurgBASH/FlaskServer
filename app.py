@@ -1,5 +1,5 @@
-from eventlet import monkey_patch
-monkey_patch()
+from gevent import monkey
+monkey.patch_all()
 import threading,os,sys,socket
 import time
 from flask import Flask, Response, redirect, request, url_for, jsonify,render_template, make_response
