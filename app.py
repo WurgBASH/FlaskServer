@@ -30,6 +30,7 @@ def json_handle():
 		if content['message_text'] != None:
 			db.messages.insert_one({'user_id': content['user_id'], 'user_name':content['user_nick'], 'first_name':content['user_name'],'message_text':content['message_text']})
 			socketio.emit('my_response', {'user_name':content['user_name'],'message_text':content['message_text']})
+	return 'okay'
 @app.route('/send_message',methods=['POST'])
 def send_message():
 	if request.method == 'POST':
