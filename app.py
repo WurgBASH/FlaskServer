@@ -1,3 +1,5 @@
+from eventlet import monkey_patch
+monkey_patch()
 import threading,os,sys,socket
 import time
 from flask import Flask, Response, redirect, request, url_for, jsonify,render_template, make_response
@@ -10,7 +12,7 @@ from flask_socketio import SocketIO,emit
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'vnkdjnfjknfl1232#'
-socketio = SocketIO(app)
+socketio = SocketIO(app, async_handlers=True)
 bot = telegram.Bot(token="710118383:AAFJuBvAtwZ4yWvkjdmBGL6pZb6ocP4e0S4")
 
 client = pymongo.MongoClient("mongodb+srv://wurg:wurg@pythonacademy-9pn3o.gcp.mongodb.net/test?retryWrites=true")
@@ -27,7 +29,7 @@ def json_handle():
 		content = request.get_json()
 		if content['message_text'] != None:
 			db.messages.insert_one({'user_id': content['user_id'], 'user_name':content['user_nick'], 'first_name':content['user_name'],'message_text':content['message_text']})
-			emit('my_response', content)
+			emit('my_response', {'user_name':content['user_name'],'message_text':content['message_text']})
 @app.route('/send_message',methods=['POST'])
 def send_message():
 	if request.method == 'POST':
@@ -59,9 +61,9 @@ def add_message():
 	# 	print(data)
 	# 	return json.dumps(data)
 
-@socketio.on('connect', namespace='/messages')
+@socketio.on('connect', namespace='/test')
 def test_connect():
-	emit('my_response', {'data': 'Connected'})
+	emit('connected', {'data': 'Connected'})
 
 if __name__ == '__main__':
 	socketio.run(app)

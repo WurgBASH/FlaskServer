@@ -5,7 +5,7 @@
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
 <script>
 
-var socket = io.connect('https://flaskappprogram.herokuapp.com/messages');
+var socket = io.connect('https://flaskappprogram.herokuapp.com/test');
 
  socket.on('connect', function() {
                 socket.emit('my_event', {data: 'I\'m connected!'});
@@ -15,6 +15,11 @@ var socket = io.connect('https://flaskappprogram.herokuapp.com/messages');
               $("#data").append( "<div class=\"container\"><p>"+msg.message_text+"</p><span class = \".time-right\">"+msg.user_name+"</span></div>");
                   
             });
+  socket.on('connected', function(msg) {
+              console.log('connected')
+                  
+            });
+
 
 </script>
 <p><a href="/">Home</a></p>
