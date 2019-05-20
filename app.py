@@ -6,10 +6,13 @@ import telegram
 import pymongo
 import logging
 import json
+from threading import Lock
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                      level=logging.INFO)
 
-
+msg_RESPONSE = 'ADESQ#$@#s'
+name_RESPONSE = 'None'
+data_base_response = 0 
 async_mode = None
 dex = False
 app = Flask(__name__)
@@ -25,12 +28,15 @@ db = client.get_database('PythonAcademy_db')
 
 
 
+
+
 @app.route('/')
 def index():
 	return render_template('index.html')
-
 @app.route('/getJSONfromBot',methods=['POST'])
 def json_handle():
+	
+	print('SSSSSSSSS')
 	print('json_handle was started')
 	if request.method == 'POST':
 		content = request.get_json()
@@ -39,7 +45,6 @@ def json_handle():
                       {'text':content['message_text'] , 'user': content['user_name']},
                       namespace='/test')
 			db.messages.insert_one({'user_id': content['user_id'], 'user_name':content['user_nick'], 'first_name':content['user_name'],'message_text':content['message_text']})
-
 @app.route('/send_message',methods=['POST'])
 def send_message():
 	if request.method == 'POST':
@@ -72,7 +77,30 @@ def add_message():
 	# 	print(data)
 	# 	return json.dumps(data)
 
+class MyNamespace(Namespace):
+	def on_my_event(self, message):
+		emit('connection',
+             {'data': 'sasa', 'count': 2})
+
+def background_thread():
+	count = 0
+	while True:
+		socketio.sleep(10)
+		count += 1
+		socketio.emit('connection',
+                      {'data': 'Server generated event', 'count': count},
+                      namespace='/test')
+
+@socketio.on('connect', namespace='/test')
+def test_connect():
+    global thread
+    # with thread_lock:
+    #     if thread is None:
+    #         thread = socketio.start_background_task(background_thread)
+    emit('connection', {'data': 'Connected', 'count': 0})
+
+socketio.on_namespace(MyNamespace('/test'))
 
 if __name__ == '__main__':
-	socketio.run(app)
+	socketio.run(app, debug=True)
 	
