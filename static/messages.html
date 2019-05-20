@@ -3,16 +3,17 @@
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <script src="jquery.js"></script>
 <script>
-if (!!window.EventSource) {
-  var source = new EventSource('/messages');
-  source.onmessage = function(e) {
-  	console.log(e.data)
-  	var obj = JSON.parse(e.data);
-    if (obj.user_message != 'ADESQ#$@#s'){
-      $("#data").append( "<div class=\"container\"><p>"+obj.user_message+"</p><span class = \".time-right\">"+obj.user_name+"</span></div>");
-    }
-  }
-}
+
+var auto_refresh = setInterval(
+  function() {
+    $.post('/messages').done(function(reply) {
+        if (reply.timestamp < $('#mydiv').attr('timestamp')) {
+            return;
+        }
+        $('#mydiv').load('load.php').attr({ timestamp: reply.timestamp });
+    });
+  }, 1000); // 
+
 </script>
 <p><a href="/">Home</a></p>
 
@@ -20,5 +21,7 @@ if (!!window.EventSource) {
 	<input type="text" name="msg_text">
     <button name="forwardBtn" type="submit">Send</button>
 </form>
+<div id="data">All messages:
 
-<div id="data">All messages:</div>
+</div>
+

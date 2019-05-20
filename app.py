@@ -1,17 +1,25 @@
 import threading,os,sys,socket
 import time
 from flask import Flask, Response, redirect, request, url_for, jsonify,render_template, make_response
+from flask_socketio import SocketIO, emit, join_room, leave_room,close_room, rooms, disconnect,Namespace
 import telegram
 import pymongo
 import logging
+import json
+from threading import Lock
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                      level=logging.INFO)
 
 msg_RESPONSE = 'ADESQ#$@#s'
 name_RESPONSE = 'None'
-dex = True
+data_base_response = 0 
+async_mode = None
+dex = False
 app = Flask(__name__)
-
+app.config['SECRET_KEY'] = 'secret!'
+socketio = SocketIO(app, async_mode=async_mode)
+thread = None
+thread_lock = Lock()
 
 bot = telegram.Bot(token="710118383:AAFJuBvAtwZ4yWvkjdmBGL6pZb6ocP4e0S4")
 
@@ -28,54 +36,72 @@ def index():
 	return render_template('index.html')
 @app.route('/getJSONfromBot',methods=['POST'])
 def json_handle():
-	global msg_RESPONSE
-	global name_RESPONSE
-	global dex
+	
+	print('SSSSSSSSS')
 	print('json_handle was started')
 	if request.method == 'POST':
-		print (request.is_json)
 		content = request.get_json()
-		print (content)
 		if content['message_text'] != None:
+			socketio.emit('my_response',
+                      {'text':content['message_text'] , 'user': content['user_name']},
+                      namespace='/test')
 			db.messages.insert_one({'user_id': content['user_id'], 'user_name':content['user_nick'], 'first_name':content['user_name'],'message_text':content['message_text']})
-			msg_RESPONSE = content['message_text']
-			name_RESPONSE = content['user_name']
-			dex = False
-
 @app.route('/send_message',methods=['POST'])
 def send_message():
-	global msg_RESPONSE
-	global name_RESPONSE
-	global dex
 	if request.method == 'POST':
 		text = request.form['msg_text']
 		bot.send_message(chat_id=781804238, text=text)
-		msg_RESPONSE = text
-		name_RESPONSE = 'bot'
-		dex = False
 		return redirect(url_for('static', filename='messages.html'))
 
-@app.route('/messages',methods=['GET'])
+@app.route('/messages',methods=['GET','POST'])
 def add_message():
-	if request.method == 'GET':
-		print('messages was started')
-		if (request.headers.get('accept') == 'text/event-stream'):
-			def events():
-				global msg_RESPONSE
-				global name_RESPONSE
-				global dex
-				while dex==True:
-					time.sleep(0.1)
-				yield "data:{\"user_message\":\""+msg_RESPONSE+"\","+"\"user_name\":\""+name_RESPONSE+"\"}\n\n"
-				msg_RESPONSE='ADESQ#$@#s'
-				dex = True
-			return Response(events(), content_type='text/event-stream')
-		return redirect(url_for('static', filename='messages.html'))
+	#if request.method == 'GET':
+	return render_template('messages.html', async_mode=socketio.async_mode)
+	# else:
+	# 	data = {}
+	# 	ges = db.messages.count()
+	# 	res = db.messages.find()
+	# 	for x in res:
 
+	# 		nam=[]
+	# 		for key,val in x.items():
+	# 			if(key=='first_name'):
+	# 				nam.append(val)
+	# 				#data[val] = []
+	# 			elif(key == 'message_text'):
+	# 				nam.append(val)
+	# 				#data[val].append(val)
+	# 		if nam[0] in data:
+	# 			data[nam[0]].append(nam[1])
+	# 		else:
+	# 			data[nam[0]] = [nam[1]]
+	# 	print(data)
+	# 	return json.dumps(data)
 
+class MyNamespace(Namespace):
+	def on_my_event(self, message):
+		emit('connection',
+             {'data': 'sasa', 'count': 2})
+
+def background_thread():
+	count = 0
+	while True:
+		socketio.sleep(10)
+		count += 1
+		socketio.emit('connection',
+                      {'data': 'Server generated event', 'count': count},
+                      namespace='/test')
+
+@socketio.on('connect', namespace='/test')
+def test_connect():
+    global thread
+    # with thread_lock:
+    #     if thread is None:
+    #         thread = socketio.start_background_task(background_thread)
+    emit('connection', {'data': 'Connected', 'count': 0})
+
+socketio.on_namespace(MyNamespace('/test'))
 
 if __name__ == '__main__':
-	print('dsd')
-
-
-	app.run()
+	socketio.run(app)
+	
