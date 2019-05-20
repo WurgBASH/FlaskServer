@@ -29,7 +29,7 @@ var socket = io.connect('https://flaskappprogram.herokuapp.com/test');
 <div id="data">All messages:
 	{% for key,val in db_data.items() %}
 		{% for x in val %}
-			<div class="container"><p>"{{x}}"</p><span class = ".time-right">"{{key}}"</span></div>
+			<div class="container"><p>{{x}}</p><span class = ".time-right">{{key}}</span></div>
 			{% endfor %}
 	{% endfor %}
 </div>
