@@ -28,9 +28,16 @@ def json_handle():
 
 @app.route('/send_message',methods=['POST'])
 def send_message():
+	global msg_RESPONSE
+	global name_RESPONSE
+	global dex
 	if request.method == 'POST':
 		text = request.form['msg_text']
-		bot.send_message(chat_id='@lunarmax', text=text)
+		bot.send_message(chat_id=781804238, text=text)
+		msg_RESPONSE = text
+		name_RESPONSE = 'bot'
+		dex = False
+		return redirect(url_for('static', filename='messages.html'))
 
 @app.route('/messages',methods=['GET'])
 def add_message():
