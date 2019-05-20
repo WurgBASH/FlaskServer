@@ -4,3 +4,4 @@ python-telegram-bot==11.1.0
 apiai==1.2.3
 googletrans==2.4.0
 pymongo==3.8.0
+dnspython==1.16.0

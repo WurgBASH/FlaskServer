@@ -25,9 +25,6 @@ db = client.get_database('PythonAcademy_db')
 
 @app.route('/')
 def index():
-	print(db.list_collection_names())
-
-	users = db.users.posts.insert_one({'name': 'jopa'}).inserted_id
 	return render_template('index.html')
 @app.route('/getJSONfromBot',methods=['POST'])
 def json_handle():
@@ -40,6 +37,7 @@ def json_handle():
 		content = request.get_json()
 		print (content)
 		if content['message_text'] != None:
+			db.messages.insert_one({'user_id': content['user_id'], 'user_name':content['user_nick'], 'first_name':content['user_name'],'message_text':content['message_text']})
 			msg_RESPONSE = content['message_text']
 			name_RESPONSE = content['user_name']
 			dex = False
