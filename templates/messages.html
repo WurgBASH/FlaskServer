@@ -4,33 +4,57 @@
 <script src="{{ url_for('static', filename='jquery.js') }}"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
 <script>
-
 var socket = io.connect('https://flaskappprogram.herokuapp.com/test');
 
- socket.on('connect', function() {
+socket.on('connect', function() {
                 socket.emit('my_event', {data: 'I\'m connected!'});
             });
 
-  socket.on('my_response', function(msg) {
-              $("#data").append( "<div class=\"container\"><p>"+msg.message_text+"</p><span class = \".time-right\">"+msg.user_name+"</span></div>");
+socket.on('my_response', function(msg) {
+              $("#"+msg.user_nick).append( "<div class=\"container\"><p>"+msg.message_text+"</p><span class = \".time-right\">"+msg.user_name+"</span></div>");
                   
             });
+
   socket.on('connected', function(msg) {
-              console.log('connected')
-                  
-            });
+              console.log('connected');
+          });
+
+  function getUserMSG(objButton,user_but){
+  	$('#messages_tab').children().hide();
+  	$('#'+user_but.id).show();
+  	$('#'+user_but.id+'_form').show();
+
+  };
+
+  function send_message(obj){
+  	socket.emit('send_message', {username: obj.id.split('_form')[0], message_text: obj.msg_text.value});
+  };
+
 </script>
 <p><a href="/">Home</a></p>
 
-<form action="/send_message" method="post">
-	<input type="text" name="msg_text">
-    <button name="forwardBtn" type="submit">Send</button>
-</form>
 <div id="data">All messages:
-	{% for key,val in db_data.items() %}
-		{% for x in val %}
-			<div class="container"><p>{{x}}</p><span class = ".time-right">{{key}}</span></div>
-			{% endfor %}
-	{% endfor %}
+		{% for key,val in users.items() %}
+<input class = "users_but" type="button" onclick="getUserMSG(this,{{key}})" value="{{val}}">
+{%endfor%}
 </div>
+<div id="messages_tab">
+	{% for key,val in messages.items() %}
+	<div id="{{key}}" style="display:none;">
+	{% for x in val %}
+	<div class="container"><p>{{x}}</p><span class = ".time-right">{{key}}</span>
+	</div>
+	{%endfor%}
+	</div>
+	<form onsubmit="send_message(this)"  id="{{key}}_form" style="display:none;">
+		<input type="text" name="msg_text">
+	    <p><input type="submit" value="Отправить"></p>
+	</form>
+	{%endfor%}
+</div>
+
+
+
+
+
 

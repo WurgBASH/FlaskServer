@@ -19,6 +19,45 @@ client = pymongo.MongoClient("mongodb+srv://wurg:wurg@pythonacademy-9pn3o.gcp.mo
 db = client.get_database('PythonAcademy_db')
 
 
+
+def GetUserId(user_name):
+	res = db.messages.find({'user_name': user_name})
+	for x in res:
+		return x['user_id']
+
+def GetAllUsers():
+	users={}
+	res = db.messages.find()
+	for x in res:
+		nam =[]
+		for key,val in x.items():
+			if(key=='user_name'):
+				nam.append(val)
+			elif (key=='first_name'):
+				nam.append(val)
+
+		if nam[0] not in users:
+			users[nam[0]] = nam[1]
+	return users
+
+def GetAllMessage():
+	messsagesFrom = {}
+	res = db.messages.find()
+	dex=False
+	for x in res:
+		nam=[]
+		for key,val in x.items():
+			if (key == 'user_name'):
+				nam.append(val)
+			elif(key == 'message_text'):
+				nam.append(val)
+				
+		if nam[0] in messsagesFrom:
+			messsagesFrom[nam[0]].append(nam[1])
+		else:
+			messsagesFrom[nam[0]] = [nam[1]]
+	return messsagesFrom
+
 @app.route('/')
 def index():
 	return render_template('index.html')
@@ -29,56 +68,22 @@ def json_handle():
 		content = request.get_json()
 		if content['message_text'] != None:
 			db.messages.insert_one({'user_id': content['user_id'], 'user_name':content['user_nick'], 'first_name':content['user_name'],'message_text':content['message_text']})
-			socketio.emit('my_response', {'user_name':content['user_name'],'message_text':content['message_text']},namespace='/test')
+			socketio.emit('my_response', {'user_name':content['user_name'],'message_text':content['message_text'],'user_nick':content['user_nick']},namespace='/test')
 	return 'okay'
-@app.route('/send_message',methods=['POST'])
-def send_message():
-	if request.method == 'POST':
-		text = request.form['msg_text']
-		bot.send_message(chat_id=781804238, text=text)
-		return redirect(url_for('static', filename='messages.html'))
 
 @app.route('/messages',methods=['GET','POST'])
 def add_message():
-	# if request.method == 'GET':
-	db_data = {}
-	res = db.messages.find()
-	for x in res:
-		nam=[]
-		for key,val in x.items():
-			if(key=='first_name'):
-				nam.append(val)
-			elif(key == 'message_text'):
-				nam.append(val)
-		if nam[0] in db_data:
-			db_data[nam[0]].append(nam[1])
-		else:
-			db_data[nam[0]] = [nam[1]]
-	
-	return render_template('messages.html', async_mode=socketio.async_mode, db_data=db_data)
-	# else:
-	# 	data = {}
-	# 	ges = db.messages.count()
-	# 	res = db.messages.find()
-	# 	for x in res:
-	# 		nam=[]
-	# 		for key,val in x.items():
-	# 			if(key=='first_name'):
-	# 				nam.append(val)
-	# 				#data[val] = []
-	# 			elif(key == 'message_text'):
-	# 				nam.append(val)
-	# 				#data[val].append(val)
-	# 		if nam[0] in data:
-	# 			data[nam[0]].append(nam[1])
-	# 		else:
-	# 			data[nam[0]] = [nam[1]]
-	# 	print(data)
-	# 	return json.dumps(data)
-
+	return render_template('messages.html', async_mode=socketio.async_mode, users=GetAllUsers(), messages = GetAllMessage())
 @socketio.on('connect', namespace='/test')
 def test_connect():
 	emit('connected', {'data': 'Connected'})
+
+@socketio.on('send_message', namespace='/test')
+def sending(mes):
+	cht_id=GetUserId(mes['username'])
+	bot.send_message(chat_id=cht_id, text=mes['message_text'])
+
+
 
 if __name__ == '__main__':
 	socketio.run(app)
