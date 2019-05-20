@@ -5,9 +5,12 @@ import telegram
 import pymongo
 import logging
 import json
+from flask_socketio import SocketIO,emit
 
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'vnkdjnfjknfl1232#'
+socketio = SocketIO(app)
 bot = telegram.Bot(token="710118383:AAFJuBvAtwZ4yWvkjdmBGL6pZb6ocP4e0S4")
 
 client = pymongo.MongoClient("mongodb+srv://wurg:wurg@pythonacademy-9pn3o.gcp.mongodb.net/test?retryWrites=true")
@@ -34,28 +37,32 @@ def send_message():
 
 @app.route('/messages',methods=['GET','POST'])
 def add_message():
-	if request.method == 'GET':
-		return render_template('messages.html')
-	else:
-		data = {}
-		ges = db.messages.count()
-		res = db.messages.find()
-		for x in res:
-			nam=[]
-			for key,val in x.items():
-				if(key=='first_name'):
-					nam.append(val)
-					#data[val] = []
-				elif(key == 'message_text'):
-					nam.append(val)
-					#data[val].append(val)
-			if nam[0] in data:
-				data[nam[0]].append(nam[1])
-			else:
-				data[nam[0]] = [nam[1]]
-		print(data)
-		return json.dumps(data)
+	# if request.method == 'GET':
+	return render_template('messages.html', async_mode=socketio.async_mode)
+	# else:
+	# 	data = {}
+	# 	ges = db.messages.count()
+	# 	res = db.messages.find()
+	# 	for x in res:
+	# 		nam=[]
+	# 		for key,val in x.items():
+	# 			if(key=='first_name'):
+	# 				nam.append(val)
+	# 				#data[val] = []
+	# 			elif(key == 'message_text'):
+	# 				nam.append(val)
+	# 				#data[val].append(val)
+	# 		if nam[0] in data:
+	# 			data[nam[0]].append(nam[1])
+	# 		else:
+	# 			data[nam[0]] = [nam[1]]
+	# 	print(data)
+	# 	return json.dumps(data)
+
+@socketio.on('connect', namespace='/test')
+def test_connect():
+	emit('my_response', {'data': 'Connected'})
 
 if __name__ == '__main__':
-	app.run()
+	socketio.run(app)
 	
