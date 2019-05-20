@@ -35,12 +35,13 @@ def json_handle():
 	global dex
 	print('json_handle was started')
 	if request.method == 'POST':
-		dex = False
 		print (request.is_json)
 		content = request.get_json()
 		print (content)
-		msg_RESPONSE = content['message_text']
-		name_RESPONSE = content['user_name']
+		if content['message_text'] != None:
+			msg_RESPONSE = content['message_text']
+			name_RESPONSE = content['user_name']
+			dex = False
 
 if __name__ == '__main__':
 	app.run()
