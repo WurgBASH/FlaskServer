@@ -1,13 +1,13 @@
 import threading,os,sys,socket
 import time
 from flask import Flask, Response, redirect, request, url_for, jsonify,render_template, make_response
-
+import telegram
 
 msg_RESPONSE = 'ADESQ#$@#s'
 name_RESPONSE = 'None'
 dex = True
 app = Flask(__name__)
-
+bot = telegram.Bot(token="710118383:AAFJuBvAtwZ4yWvkjdmBGL6pZb6ocP4e0S4")
 @app.route('/')
 def index():
 	return render_template('index.html')
