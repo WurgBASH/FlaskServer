@@ -12,7 +12,8 @@ var socket = io.connect('https://flaskappprogram.herokuapp.com/test');
             });
 
   socket.on('my_response', function(msg) {
-                console.log('okay')
+              $("#data").append( "<div class=\"container\"><p>"+msg.message_text+"</p><span class = \".time-right\">"+msg.user_name+"</span></div>");
+                  
             });
 
 </script>

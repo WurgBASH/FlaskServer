@@ -27,7 +27,7 @@ def json_handle():
 		content = request.get_json()
 		if content['message_text'] != None:
 			db.messages.insert_one({'user_id': content['user_id'], 'user_name':content['user_nick'], 'first_name':content['user_name'],'message_text':content['message_text']})
-
+			emit('my_response', content)
 @app.route('/send_message',methods=['POST'])
 def send_message():
 	if request.method == 'POST':
@@ -59,7 +59,7 @@ def add_message():
 	# 	print(data)
 	# 	return json.dumps(data)
 
-@socketio.on('connect', namespace='/test')
+@socketio.on('connect', namespace='/messages')
 def test_connect():
 	emit('my_response', {'data': 'Connected'})
 
