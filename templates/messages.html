@@ -17,7 +17,7 @@
 		$("#"+msg.user_nick).append("<div class=\"chip\" >"+msg.user_nick+":</div><div class = \"white-text\">"+msg.message_text+"</div><br>");
 
 	});
-	ocket.on('bot_msg', function(msg) {
+	socket.on('bot_msg', function(msg) {
 		$("#"+msg.user_nick).append("<div class=\"chip\" >Бот:</div><div class = \"white-text\">"+msg.message_text+"</div><br>");
 
 	});
