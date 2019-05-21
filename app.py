@@ -2,7 +2,7 @@ from gevent import monkey
 monkey.patch_all()
 import threading,os,sys,socket
 import time
-from flask import Flask, Response, redirect, request, url_for, jsonify,render_template, make_response
+from flask import Flask, Response, redirect, request, url_for, jsonify,render_template, make_response,session
 import telegram
 import pymongo
 import logging
@@ -75,9 +75,22 @@ def GetAllMessage():
 
 #---------------------------------------------
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def index():
-	return render_template('index.html')
+	if request.method == 'POST':
+		if request.form['password'] == 'admin' and request.form['username'] == 'admin':
+			session['logged_in'] = True
+			return add_message()
+		else:
+			return render_template('index.html')
+	else:
+		if not session.get('logged_in'):
+			return render_template('index.html')
+		else:
+			return add_message()
+	
+# def index():
+# 	return render_template('index.html')
 
 #---------------------------------------------
 

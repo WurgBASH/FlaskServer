@@ -1,6 +1,38 @@
 <!doctype html>
 <html>
-<body>
-    <p><a href="/messages">Check out this cool form!</a></p>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/emojione/2.2.6/assets/css/emojione.min.css"/>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+
+<body class="blue-grey darken-4">
+	{% if session['logged_in'] %}
+
+	You're logged in already!
+
+	{% else %}
+	<div class="col l4 m6 s8">
+
+		<form action="/" method="POST">
+			<div class="row .align-middle"  id="signup" v-if="!joined">
+				<div class="input-field white-text col s12">
+					<input type="text" name="username" placeholder="Username" >
+					<label for="username"></label>
+				</div>
+				<div class="input-field white-text col s12">
+					<input  type="password" name="password" placeholder="Password">
+					<label for="password"></label>
+				</div>
+				<div class="input-field col s12">
+					<input class="waves-effect waves-light btn col s12" type="submit" value="Log in">
+				</div>
+			</div>
+		</form>
+	</div>
+
+	{% endif %}
+
 </body>
+
 </html>
