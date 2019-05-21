@@ -7,6 +7,11 @@
 <script src="{{ url_for('static', filename='jquery.js') }}"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
 <script>
+	var socket = io.connect('https://flaskappprogram.herokuapp.com/test');
+
+	socket.on('connect', function() {
+		socket.emit('my_event', {data: 'I\'m connected!'});
+	});
 	function burger() {
             $('.menu').toggleClass('menu_opened');
             $(document).click(function(event) {
@@ -15,6 +20,11 @@
                 event.stopPropagation();
             });
         };
+
+        function send_messages(obj){
+		socket.emit('sendMessages', {message_text: obj.msg_text.value});
+		obj.msg_text.value='';
+	};
 </script>
 <body class="blue-grey darken-4">
 	<header>
@@ -29,7 +39,7 @@
 		<div class="row">
 		<div class="col l10 m8 s11">
 
-			<form method="POST" onsubmit="send_message(this); return false;">
+			<form method="POST" onsubmit="send_messages(this); return false;">
 				<div class="nav-wrapper col m10 s12">
 				<h2  class="brand-logo col s8 offset-s4 m4 white-text">Рассылка</h2>
 			</div>

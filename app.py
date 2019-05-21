@@ -151,7 +151,13 @@ def sending(mes):
 	bot.send_message(chat_id=cht_id, text=mes['message_text'])
 
 
-
+@socketio.on('sendMessages', namespace='/test')
+def sendingAll(mes):
+	users = GetAllUsers()
+	for key,val in users.items():
+		cht_id = GetUserId(key)
+		bot.send_message(chat_id=cht_id, text=mes['message_text'])
+	
 
 
 if __name__ == '__main__':
