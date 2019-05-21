@@ -87,8 +87,8 @@ def json_handle():
 	if request.method == 'POST':
 		content = request.get_json()
 		if content['message_text'] != None:
-			db.messages.insert_one({'bot_bool': 'bot','user_id': content['user_id'], 'user_name':content['user_nick'], 'first_name':content['user_name'],'message_text':content['message_text']})
-			socketio.emit('bot_msg', {'user_name':content['user_name'],'message_text':content['message_text'],'user_nick':content['user_nick']},namespace='/test')
+			db.messages.insert_one({'user_id': content['user_id'], 'user_name':content['user_nick'], 'first_name':content['user_name'],'message_text':content['message_text']})
+			socketio.emit('my_response', {'user_name':content['user_name'],'message_text':content['message_text'],'user_nick':content['user_nick']},namespace='/test')
 	return 'okay'
 #---------------------------------------------
 
@@ -98,8 +98,8 @@ def jsonbot_handle():
 	if request.method == 'POST':
 		content = request.get_json()
 		if content['message_text'] != None:
-			db.messages.insert_one({'user_id': content['user_id'], 'user_name':content['user_nick'], 'first_name':content['user_name'],'message_text':content['message_text']})
-			socketio.emit('my_response', {'user_name':content['user_name'],'message_text':content['message_text'],'user_nick':content['user_nick']},namespace='/test')
+			db.messages.insert_one({'bot_bool': 'bot','user_id': content['user_id'], 'user_name':content['user_nick'], 'first_name':content['user_name'],'message_text':content['message_text']})
+			socketio.emit('bot_msg', {'user_name':content['user_name'],'message_text':content['message_text'],'user_nick':content['user_nick']},namespace='/test')
 	return 'okay'	
 
 #---------------------------------------------
@@ -119,7 +119,13 @@ def test_connect():
 @socketio.on('send_message', namespace='/test')
 def sending(mes):
 	cht_id=GetUserId(mes['username'])
+	user = col.find({'user_id':cht_id}).limit(1) 
+	db.messages.insert_one({'user_id': user['user_id'], 'user_name':user['user_nick'], 'first_name':user['user_name'],'message_text':mes['message_text']})
+	socketio.emit('bot_msg', {'user_name':user['user_name'],'message_text':mes['message_text'],'user_nick':user['user_nick']},namespace='/test')
+
 	bot.send_message(chat_id=cht_id, text=mes['message_text'])
+
+
 
 
 
