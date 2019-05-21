@@ -1,57 +1,112 @@
 <!doctype html>
 <title>Server Send Events Demo</title>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/emojione/2.2.6/assets/css/emojione.min.css"/>
 <script src="{{ url_for('static', filename='jquery.js') }}"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
 <script>
-var socket = io.connect('https://flaskappprogram.herokuapp.com/test');
+	var socket = io.connect('https://flaskappprogram.herokuapp.com/test');
 
-socket.on('connect', function() {
-                socket.emit('my_event', {data: 'I\'m connected!'});
+	socket.on('connect', function() {
+		socket.emit('my_event', {data: 'I\'m connected!'});
+	});
+
+	socket.on('my_response', function(msg) {
+		$("#"+msg.user_nick).append( "<div class=\"container\"><p>"+msg.message_text+"</p><span class = \".time-right\">"+msg.user_name+"</span></div>");
+
+	});
+
+	socket.on('connected', function(msg) {
+		console.log('connected');
+	});
+
+	function getUserMSG(objButton,user_but){
+		$('#buts_send').children().hide();
+		$('#chat-messages').children().hide();
+		$('#'+user_but.id).show();
+		$('#'+user_but.id+'_form').show();
+
+	};
+
+	function send_message(obj){
+		socket.emit('send_message', {username: obj.id.split('_form')[0], message_text: obj.msg_text.value});
+	};
+	 function burger() {
+            $('.menu').toggleClass('menu_opened');
+            $(document).click(function(event) {
+                if ($(event.target).closest(".burger_trigger").length ) return;
+                $('.menu').removeClass('menu_opened');
+                event.stopPropagation();
             });
-
-socket.on('my_response', function(msg) {
-              $("#"+msg.user_nick).append( "<div class=\"container\"><p>"+msg.message_text+"</p><span class = \".time-right\">"+msg.user_name+"</span></div>");
-                  
-            });
-
-  socket.on('connected', function(msg) {
-              console.log('connected');
-          });
-
-  function getUserMSG(objButton,user_but){
-  	$('#messages_tab').children().hide();
-  	$('#'+user_but.id).show();
-  	$('#'+user_but.id+'_form').show();
-
-  };
-
-  function send_message(obj){
-  	socket.emit('send_message', {username: obj.id.split('_form')[0], message_text: obj.msg_text.value});
-  };
+        };
 
 </script>
-<p><a href="/">Home</a></p>
+<body class="blue-grey darken-4">
+	<header>
+		<nav class="row blue-grey darken-3">
+			<div class="nav-wrapper col m10 s12">
+				<a href="/" class="brand-logo col s8 offset-s4 m4">Диплом</a>
+			</div>
 
-<div id="data">All messages:
-		{% for key,val in users.items() %}
-<input class = "users_but" type="button" onclick="getUserMSG(this,{{key}})" value="{{val}}">
-{%endfor%}
-</div>
-<div id="messages_tab">
-	{% for key,val in messages.items() %}
-	<div id="{{key}}" style="display:none;">
-	{% for x in val %}
-	<div class="container"><p>{{x}}</p><span class = ".time-right">{{key}}</span>
-	</div>
-	{%endfor%}
-	</div>
-	<form onsubmit="send_message(this)"  id="{{key}}_form" style="display:none;">
-		<input type="text" name="msg_text">
-	    <p><input type="submit" value="Отправить"></p>
-	</form>
-	{%endfor%}
-</div>
+		</nav>
+	</header>
+	<main>
+		<div class="row">
+			<div class="col l2 m4 s8 mobileGlist">
+				<div class="card horizontal blue-grey darken-3">
+					<div id="data" class="card-content blue-grey darken-3 col s12">
+						{% for key,val in users.items() %}
+						<div class="input-field col s12">
+						<input  class="waves-effect waves-light btn users_but col s12" type="button" onclick="getUserMSG(this,{{key}})" value="{{val}}">
+					</div><br>
+						{%endfor%}
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col l10 m8 s11">
+
+				<div class="card horizontal">
+					<div id="chat-messages" class="card-content blue-grey darken-3 ">
+						{% for key,val in messages.items() %}
+						<div id="{{key}}" style="display:none;">
+							{% for x in val %}
+							<div class="chip" >{{key}}:</div><div class = "white-text">{{x}}</div><br>
+							
+							{%endfor%}
+						</div>	
+						{%endfor%}
+					</div>
+            </div>
+            <img src="{{ url_for('static', filename='img/menuIcon.png') }}""  class = "burger_trigger" alt="" onclick='burger()'>
+            <ul class="menu"  onclick='burger()'>
+                <li><a class="white-text" href="/messages">Сообщения</a></li>
+                <li><a class="white-text" href="/">Статистика</a></li>
+                <li><a class="white-text" href="/">Рассылка</a></li>
+            </ul>і
+
+
+				</div>
+			</div>
+		</div>
+		<div class="row" id="buts_send">
+			{% for key,val in messages.items() %}
+			<form onsubmit="send_message(this)"  id="{{key}}_form" style="display:none;">
+				<div class="input-field white-text col l8 offset-l2 offset-m4 s8">
+					<input type="text" name="msg_text"></div>
+					<div class="input-field col l4 offset-l2 offset-m4 s4">
+						<input class="waves-effect waves-light btn" type="submit" value="Отправить">
+					</div>
+				</form>
+			{%endfor%}
+			</div>
+			
+		</div>
+	</main>
+</body>
 
 
 
