@@ -119,7 +119,8 @@ def test_connect():
 @socketio.on('send_message', namespace='/test')
 def sending(mes):
 	cht_id=GetUserId(mes['username'])
-	user = db.messages.find({'user_id':cht_id}).limit(1) 
+	users = db.messages.find({'user_id':cht_id}).limit(1) 
+	user =users[0]
 	db.messages.insert_one({'user_id': user['user_id'], 'user_name':user['user_nick'], 'first_name':user['user_name'],'message_text':mes['message_text']})
 	socketio.emit('bot_msg', {'user_name':user['user_name'],'message_text':mes['message_text'],'user_nick':user['user_nick']},namespace='/test')
 

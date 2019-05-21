@@ -32,6 +32,9 @@
 		$('#'+user_but.id).show();
 		$('#'+user_but.id+'_form').show();
 
+		myscroll = $('#'+user_but.id);
+  		myscroll.scrollTop(myscroll.get(0).scrollHeight);
+
 	};
 
 	function send_message(obj){
@@ -46,8 +49,6 @@
                 event.stopPropagation();
             });
         };
-
-
 </script>
 <body class="blue-grey darken-4">
 	<header>
