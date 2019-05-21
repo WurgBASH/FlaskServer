@@ -1,0 +1,55 @@
+<!doctype html>
+<title>Messages</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/emojione/2.2.6/assets/css/emojione.min.css"/>
+<script src="{{ url_for('static', filename='jquery.js') }}"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+<script>
+	function burger() {
+            $('.menu').toggleClass('menu_opened');
+            $(document).click(function(event) {
+                if ($(event.target).closest(".burger_trigger").length ) return;
+                $('.menu').removeClass('menu_opened');
+                event.stopPropagation();
+            });
+        };
+</script>
+<body class="blue-grey darken-4">
+	<header>
+		<nav class="row blue-grey darken-3">
+			<div class="nav-wrapper col m10 s12">
+				<a href="/" class="brand-logo col s8 offset-s4 m4">Диплом</a>
+			</div>
+
+		</nav>
+	</header>
+	<main>
+		<div class="row">
+		<div class="col l10 m8 s11">
+
+			<form method="POST" onsubmit="send_message(this); return false;">
+				<div class="nav-wrapper col m10 s12">
+				<h2  class="brand-logo col s8 offset-s4 m4 white-text">Рассылка</h2>
+			</div>
+				<div class="input-field white-text col l8 offset-l2 offset-m4 s8">
+					<input type="text" name="msg_text"></div>
+					<div class="input-field col l4 offset-l2 offset-m4 s4">
+						<input class="waves-effect waves-light btn" type="submit" value="Отправить">
+					</div>
+				</form>
+				
+            </div>
+            <img src="{{ url_for('static', filename='img/menuIcon.png') }}""  class = "burger_trigger" alt="" onclick='burger()'>
+            <ul class="menu"  onclick='burger()'>
+                <li><a class="white-text" href="/messages">Сообщения</a></li>
+                <li><a class="white-text" href="/statistics">Статистика</a></li>
+                <li><a class="white-text" href="/mailing">Рассылка</a></li>
+            </ul>
+
+
+		</div>
+	</div>
+	</main>
+</body>

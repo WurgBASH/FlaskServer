@@ -1,0 +1,61 @@
+<!doctype html>
+<title>Messages</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/emojione/2.2.6/assets/css/emojione.min.css"/>
+<script src="{{ url_for('static', filename='jquery.js') }}"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+<script>
+	function burger() {
+            $('.menu').toggleClass('menu_opened');
+            $(document).click(function(event) {
+                if ($(event.target).closest(".burger_trigger").length ) return;
+                $('.menu').removeClass('menu_opened');
+                event.stopPropagation();
+            });
+        };
+</script>
+<body class="blue-grey darken-4">
+	<header>
+		<nav class="row blue-grey darken-3">
+			<div class="nav-wrapper col m10 s12">
+				<a href="/" class="brand-logo col s8 offset-s4 m4">Диплом</a>
+			</div>
+
+		</nav>
+	</header>
+	<main>
+		<div class="col 12 ">
+		<div class="row align-middle">
+		<div class="col 12">
+			<h2  class="brand-logo white-text">Статистика уроков:</h2>
+			<div class="card horizontal">
+					<div id="chat-messages" class="card-content blue-grey darken-3 ">
+						<div >
+								<div class = "white-text"><div class="chip" >5</div>Урок №1</div><br>
+								<div class = "white-text"><div class="chip" >7</div>Урок №2</div><br>
+								<div class = "white-text"><div class="chip" >2</div>Урок №3</div><br>
+								<div class = "white-text"><div class="chip" >4</div>Урок №4</div><br>
+								<div class = "white-text"><div class="chip" >8</div>Урок №5</div><br>
+						</div>	
+
+					</div>
+            </div>
+			
+			
+				
+            </div>
+            <img src="{{ url_for('static', filename='img/menuIcon.png') }}""  class = "burger_trigger" alt="" onclick='burger()'>
+            <ul class="menu"  onclick='burger()'>
+                <li><a class="white-text" href="/messages">Сообщения</a></li>
+                <li><a class="white-text" href="/statistics">Статистика</a></li>
+                <li><a class="white-text" href="/mailing">Рассылка</a></li>
+            </ul>
+
+
+		</div>
+	</div>
+</div>
+	</main>
+</body>

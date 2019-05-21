@@ -92,6 +92,10 @@ def index():
 # def index():
 # 	return render_template('index.html')
 
+@app.route('/mailing', methods=['GET','POST'])
+def mailing():
+	return render_template('mailing.html')
+
 #---------------------------------------------
 
 @app.route('/getJSONfromBot',methods=['POST'])
@@ -114,6 +118,13 @@ def jsonbot_handle():
 			db.messages.insert_one({'bot_bool': 'bot','user_id': content['user_id'], 'user_name':content['user_nick'], 'first_name':content['user_name'],'message_text':content['message_text']})
 			socketio.emit('bot_msg', {'user_name':content['user_name'],'message_text':content['message_text'],'user_nick':content['user_nick']},namespace='/test')
 	return 'okay'	
+
+#---------------------------------------------
+
+
+@app.route('/statistics',methods=['GET','POST'])
+def statistics():
+	return render_template('statistics.html',)
 
 #---------------------------------------------
 
