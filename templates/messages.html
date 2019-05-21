@@ -32,8 +32,8 @@
 		$('#'+user_but.id).show();
 		$('#'+user_but.id+'_form').show();
 
-		myscroll = $('#'+user_but.id);
-  		myscroll.scrollTop(myscroll.get(0).scrollHeight);
+		var pane = document.getElementById(user_but.id);
+		pane.scrollTop = pane.offsetHeight;
 
 	};
 
