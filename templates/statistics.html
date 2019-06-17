@@ -16,8 +16,8 @@
 
 	socket.on('statistics', function(msg) {
 		msg.lesson_id
-		$('#chat-messages').animate({ scrollTop: $('#'+msg.user_nick).height() }, "slow");
-		$("#"+msg.user_nick).append("<div class=\"chip\" >"+msg.user_name+":</div><div class = \"white-text\">"+msg.message_text+"</div><br>");
+		var x = $("#les"+msg.lesson_id).text()
+		$("#les"+msg.lesson_id).innerHTML=parseInt(x)+1;
 
 	});
 
@@ -47,22 +47,22 @@
 			<div class="card horizontal">
 					<div id="chat-messages" class="card-content blue-grey darken-3 ">
 						<div >
-								<div class = "white-text"><div class="chip" >{{mas[0]}}</div>Урок №1</div><br>
-								<div class = "white-text"><div class="chip" >{{mas[1]}}</div>Урок №2</div><br>
-								<div class = "white-text"><div class="chip" >{{mas[2]}}</div>Урок №3</div><br>
-								<div class = "white-text"><div class="chip" >{{mas[3]}}</div>Урок №4</div><br>
-								<div class = "white-text"><div class="chip" >{{mas[4]}}</div>Урок №5</div><br>
-								<div class = "white-text"><div class="chip" >{{mas[5]}}</div>Урок №6</div><br>
-								<div class = "white-text"><div class="chip" >{{mas[6]}}</div>Урок №7</div><br>
-								<div class = "white-text"><div class="chip" >{{mas[7]}}</div>Урок №8</div><br>
-								<div class = "white-text"><div class="chip" >{{mas[8]}}</div>Урок №9</div><br>
-								<div class = "white-text"><div class="chip" >{{mas[9]}}</div>Урок №10</div><br>
-								<div class = "white-text"><div class="chip" >{{mas[10]}}</div>Урок №11</div><br>
-								<div class = "white-text"><div class="chip" >{{mas[11]}}</div>Урок №12</div><br>
-								<div class = "white-text"><div class="chip" >{{mas[12]}}</div>Урок №13</div><br>
-								<div class = "white-text"><div class="chip" >{{mas[13]}}</div>Урок №14</div><br>
-								<div class = "white-text"><div class="chip" >{{mas[14]}}</div>Урок №15</div><br>
-								<div class = "white-text"><div class="chip" >{{mas[15]}}</div>Урок №16</div><br>
+								<div class = "white-text"><div class="chip" id="les1">{{mas[0]}}</div>Урок №1</div><br>
+								<div class = "white-text"><div class="chip" id="les2">{{mas[1]}}</div>Урок №2</div><br>
+								<div class = "white-text"><div class="chip" id="les3">{{mas[2]}}</div>Урок №3</div><br>
+								<div class = "white-text"><div class="chip" id="les4">{{mas[3]}}</div>Урок №4</div><br>
+								<div class = "white-text"><div class="chip" id="les5">{{mas[4]}}</div>Урок №5</div><br>
+								<div class = "white-text"><div class="chip" id="les6">{{mas[5]}}</div>Урок №6</div><br>
+								<div class = "white-text"><div class="chip" id="les7">{{mas[6]}}</div>Урок №7</div><br>
+								<div class = "white-text"><div class="chip" id="les8">{{mas[7]}}</div>Урок №8</div><br>
+								<div class = "white-text"><div class="chip" id="les9">{{mas[8]}}</div>Урок №9</div><br>
+								<div class = "white-text"><div class="chip" id="les10">{{mas[9]}}</div>Урок №10</div><br>
+								<div class = "white-text"><div class="chip" id="les11">{{mas[10]}}</div>Урок №11</div><br>
+								<div class = "white-text"><div class="chip" id="les12">{{mas[11]}}</div>Урок №12</div><br>
+								<div class = "white-text"><div class="chip" id="les13">{{mas[12]}}</div>Урок №13</div><br>
+								<div class = "white-text"><div class="chip" id="les14">{{mas[13]}}</div>Урок №14</div><br>
+								<div class = "white-text"><div class="chip" id="les15">{{mas[14]}}</div>Урок №15</div><br>
+								<div class = "white-text"><div class="chip" id="les16">{{mas[15]}}</div>Урок №16</div><br>
 						</div>	
 
 					</div>

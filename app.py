@@ -82,7 +82,7 @@ def GetAllStat():
 	dex=True
 	for x in res:
 		for key,val in x.items():
-			if  (key == 'lesson_id'):
+			if  (key == 'counter'):
 				mas.append(val)
 	return mas
 
