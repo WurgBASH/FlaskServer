@@ -15,7 +15,7 @@
 	});
 
 	socket.on('statistics', function(msg) {
-		msg.lesson_id
+		console.log(msg.lesson_id)
 		var x = $("#les"+msg.lesson_id).text()
 		$("#les"+msg.lesson_id).innerHTML=parseInt(x)+1;
 
