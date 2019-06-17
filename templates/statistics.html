@@ -17,7 +17,10 @@
 	socket.on('statistics', function(msg) {
 		console.log($("#les"+msg.lesson_id))
 		var x = $("#les"+msg.lesson_id).text()
-		$("#les"+msg.lesson_id).html=parseInt(x)+1;
+		console.log(x)
+		console.log(x+1)
+		console.log(parseInt(x)+1)
+		$("#les"+msg.lesson_id).text(parseInt(x)+1);
 
 	});
 
