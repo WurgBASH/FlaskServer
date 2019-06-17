@@ -15,11 +15,7 @@
 	});
 
 	socket.on('statistics', function(msg) {
-		console.log($("#les"+msg.lesson_id))
 		var x = $("#les"+msg.lesson_id).text()
-		console.log(x)
-		console.log(x+1)
-		console.log(parseInt(x)+1)
 		$("#les"+msg.lesson_id).text(parseInt(x)+1);
 
 	});
@@ -45,11 +41,11 @@
 	<main>
 		<div class="col 12 ">
 		<div class="row align-middle">
-		<div class="col 12">
+		<div >
 			<h2  class="brand-logo white-text">Статистика тестів:</h2>
 			<div class="card horizontal">
 					<div id="chat-messages" class="card-content blue-grey darken-3 ">
-						<div >
+						<div class="col 6">
 								<div class = "white-text"><div class="chip" id="les1">{{mas[0]}}</div>Тест №1</div><br>
 								<div class = "white-text"><div class="chip" id="les2">{{mas[1]}}</div>Тест №2</div><br>
 								<div class = "white-text"><div class="chip" id="les3">{{mas[2]}}</div>Тест №3</div><br>
@@ -58,6 +54,8 @@
 								<div class = "white-text"><div class="chip" id="les6">{{mas[5]}}</div>Тест №6</div><br>
 								<div class = "white-text"><div class="chip" id="les7">{{mas[6]}}</div>Тест №7</div><br>
 								<div class = "white-text"><div class="chip" id="les8">{{mas[7]}}</div>Тест №8</div><br>
+							</div>
+							<div class="col 6">
 								<div class = "white-text"><div class="chip" id="les9">{{mas[8]}}</div>Тест №9</div><br>
 								<div class = "white-text"><div class="chip" id="les10">{{mas[9]}}</div>Тест №10</div><br>
 								<div class = "white-text"><div class="chip" id="les11">{{mas[10]}}</div>Тест №11</div><br>
