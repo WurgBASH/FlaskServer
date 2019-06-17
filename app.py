@@ -141,7 +141,7 @@ def jsonles_handle():
 		content = request.get_json()
 		myquery = { "lesson_id": content['lesson_id'] }
 		newvalues = { "$inc": { "counter": 1 } }
-		db.statistics.update_one(myquery, newvalues,{upsert: true})
+		db.statistics.update_one(myquery, newvalues,True)
 		socketio.emit('statistics', {'lesson_id':content['lesson_id']},namespace='/test')
 	return 'okay'	
 
