@@ -135,7 +135,7 @@ def jsonbot_handle():
 #---------------------------------------------
 
 @app.route('/getJSONLessons',methods=['POST'])
-def jsonbot_handle():
+def jsonles_handle():
 	print('json_handle was started')
 	if request.method == 'POST':
 		content = request.get_json()
