@@ -63,7 +63,7 @@ def GetAllMessage():
 					nam.append(val)	
 				else:
 					nam.append('Бот')
-					dex=False
+					dex=True
 			elif(key == 'message_text'):
 				nam.append(val)
 
