@@ -75,6 +75,19 @@ def GetAllMessage():
 
 #---------------------------------------------
 
+def GetAllStat():
+	mas =[]
+	messsagesFrom = {}
+	res = db.statistics.find()
+	dex=True
+	for x in res:
+		for key,val in x.items():
+			if  (key == 'lesson_id'):
+				mas.append(val)
+	return mas
+
+#---------------------------------------------
+
 @app.route('/', methods=['GET','POST'])
 def index():
 	if request.method == 'POST':
@@ -121,10 +134,21 @@ def jsonbot_handle():
 
 #---------------------------------------------
 
+@app.route('/getJSONLessons',methods=['POST'])
+def jsonbot_handle():
+	print('json_handle was started')
+	if request.method == 'POST':
+		content = request.get_json()
+		myquery = { "lesson_id": content['lesson_id'] }
+		newvalues = { "$inc": { "counter": 1 } }
+		db.statistics.update_one(myquery, newvalues,{upsert: true})
+		socketio.emit('statistics', {'lesson_id':content['lesson_id']},namespace='/test')
+	return 'okay'	
 
+#---------------------------------------------
 @app.route('/statistics',methods=['GET','POST'])
 def statistics():
-	return render_template('statistics.html',)
+	return render_template('statistics.html',async_mode=socketio.async_mode, mas=GetAllStat())
 
 #---------------------------------------------
 
