@@ -45,6 +45,8 @@
 	};
 
 	function send_message(obj){
+		console.log(obj.id.split('_form')[0])
+		console.log(obj.msg_text.value)
 		socket.emit('send_message', {user_id: obj.id.split('_form')[0], message_text: obj.msg_text.value});
 		obj.msg_text.value='';
 	};
