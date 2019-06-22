@@ -37,11 +37,11 @@
 	function getUserMSG(objButton,user_but){
 		$('#buts_send').children().hide();
 		$('#chat-messages').children().hide();
-		console.log($('#'+user_but.id))
-		$('#'+user_but.id).show();
-		$('#'+user_but.id+'_form').show();
+		console.log($('#'+user_but))
+		$('#'+user_but).show();
+		$('#'+user_but+'_form').show();
 
-   		$('#chat-messages').animate({ scrollTop: $('#'+user_but.id).height() }, "slow");
+   		$('#chat-messages').animate({ scrollTop: $('#'+user_but).height() }, "slow");
 
 	};
 
