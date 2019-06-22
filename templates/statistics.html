@@ -30,6 +30,23 @@
         };
 </script>
 <body class="blue-grey darken-4">
+	<input type="checkbox" id="nav-toggle" hidden>
+    <nav class="nav">
+        <label for="nav-toggle" class="nav-toggle" onclick></label>
+        <h2 class="logo"> 
+            <a href="/">Learn Python</a> 
+        </h2>
+        <ul>
+            <li><a href="/messages">Повідомлення</a></li><br>
+            <li><a href="/statistics">Статистика</a></li><br>
+            <li><a href="/mailing">Розсилка</a></li><br>
+        </ul></nav>	
+        <header>
+		<nav class="row blue-grey darken-3">
+			<div class="nav-wrapper col m10 s12">
+				<a href="/" class="brand-logo col s8 offset-s4 m4">Learn Python</a>
+			</div>
+		</nav>
 	<header>
 		<nav class="row blue-grey darken-3">
 			<div class="nav-wrapper col m10 s12">
@@ -68,15 +85,6 @@
 					</div>
             </div>
 			
-			
-				
-            </div>
-            <img src="{{ url_for('static', filename='img/menuIcon.png') }}""  class = "burger_trigger" alt="" onclick='burger()'>
-            <ul class="menu"  onclick='burger()'>
-                <li><a class="white-text" href="/messages">Повідомлення</a></li>
-                <li><a class="white-text" href="/statistics">Статистика</a></li>
-                <li><a class="white-text" href="/mailing">Розсилка</a></li>
-            </ul>
 
 
 		</div>
