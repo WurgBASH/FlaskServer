@@ -113,7 +113,6 @@ def mailing():
 
 @app.route('/getJSONfromBot',methods=['POST'])
 def json_handle():
-	print('json_handle was started')
 	if request.method == 'POST':
 		content = request.get_json()
 		if content['message_text'] != None:
