@@ -147,7 +147,7 @@ def jsonles_handle():
 
 #---------------------------------------------
 @app.route('/newUserInBot',methods=['POST'])
-def jsonles_handle():
+def users_handle():
 	print('New user in bot')
 	if request.method == 'POST':
 		content = request.get_json()
