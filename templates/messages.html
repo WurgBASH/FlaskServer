@@ -69,8 +69,8 @@
 	<main>
 		<div class="row">
 			<div class="col l2 m4 s8 mobileGlist">
-				<div class="card horizontal blue-grey darken-3">
-					<div id="data" class="card-content blue-grey darken-3 col s12" style="display:none; overflow:auto">
+				<div class="card horizontal blue-grey darken-3"  style="display:none; overflow:auto">
+					<div id="data" class="card-content blue-grey darken-3 col s12">
 						{% for key,val in users.items() %}
 						<div class="input-field col s12">
 						<input  class="waves-effect waves-light btn users_but col s12" type="button" onclick="getUserMSG(this,{{key}})" value="{{val}}">
