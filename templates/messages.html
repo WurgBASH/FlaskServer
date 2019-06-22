@@ -57,13 +57,31 @@
             });
         };
 </script>
-<body class="blue-grey darken-4">
+<body class="blue-grey darken-4" class="nav">
 	<header>
 		<nav class="row blue-grey darken-3">
 			<div class="nav-wrapper col m10 s12">
 				<a href="/" class="brand-logo col s8 offset-s4 m4">Learn Python</a>
 			</div>
-
+        <!-- 
+    Метка с именем `id` чекбокса в `for` атрибуте
+    Символ Unicode 'TRIGRAM FOR HEAVEN' (U+2630)
+    Пустой атрибут `onclick` используем для исправления бага в iOS < 6.0
+    См: http://timpietrusky.com/advanced-checkbox-hack 
+    -->
+        <label for="nav-toggle" class="nav-toggle" onclick></label>
+        <!-- 
+    Здесь размещаете любую разметку,
+    если это меню, то скорее всего неупорядоченный список <ul>
+    -->
+        <h2 class="logo"> 
+            <a href="/">Learn Python</a> 
+        </h2>
+        <ul>
+            <li><a href="#1">Один</a>
+            <li><a href="#2">Два</a>
+            <li><a href="#3">Три</a>
+        </ul>
 		</nav>
 	</header>
 	<main>
