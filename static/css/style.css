@@ -37,7 +37,12 @@ nav img {
     margin: 8px 15px;
 }
 
+#data{
+    min-height: 10vh;
+    max-height: 65vh;
+    overflow-y: auto;
 
+}
 #chat-messages {
     min-height: 10vh;
     height: 65vh;
