@@ -174,7 +174,7 @@ def test_connect():
 def sending(mes):
 	users = db.messages.find({'user_id':int(mes['user_id'])}).limit(1) 
 	user =users[0]
-	db.messages.insert_one({'user_id': user['user_id'], 'user_name':user['user_name'], 'first_name':user['first_name'],'message_text':mes['message_text']})
+	db.messages.insert_one({'bot_bool':"bot",'user_id': user['user_id'], 'user_name':user['user_name'], 'first_name':user['first_name'],'message_text':mes['message_text']})
 	socketio.emit('bot_msg', {'user_name':user['first_name'],'message_text':mes['message_text'],'user_id':user['user_id']},namespace='/test')
 
 	bot.send_message(chat_id=user['user_id'], text=mes['message_text'])
