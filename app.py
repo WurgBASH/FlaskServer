@@ -36,7 +36,7 @@ def GetAllUsers():
 	for x in res:
 		nam =[]
 		for key,val in x.items():
-			if(key=='user_name'):
+			if(key=='user_id'):
 				nam.append(val)
 			elif (key=='first_name'):
 				nam.append(val)
@@ -56,7 +56,7 @@ def GetAllMessage():
 		for key,val in x.items():
 			if  (key == 'bot_bool'):
 				dex = False
-			elif (key == 'user_name'):
+			elif (key == 'user_id'):
 				nam.append(val)
 			elif (key=='first_name'):
 				if dex:
@@ -118,7 +118,7 @@ def json_handle():
 		content = request.get_json()
 		if content['message_text'] != None:
 			db.messages.insert_one({'user_id': content['user_id'], 'user_name':content['user_nick'], 'first_name':content['user_name'],'message_text':content['message_text']})
-			socketio.emit('my_response', {'user_name':content['user_name'],'message_text':content['message_text'],'user_nick':content['user_nick']},namespace='/test')
+			socketio.emit('my_response', {'user_name':content['user_name'],'message_text':content['message_text'],'user_id':content['user_id']},namespace='/test')
 	return 'okay'
 #---------------------------------------------
 
@@ -129,7 +129,7 @@ def jsonbot_handle():
 		content = request.get_json()
 		if content['message_text'] != None:
 			db.messages.insert_one({'bot_bool': 'bot','user_id': content['user_id'], 'user_name':content['user_nick'], 'first_name':content['user_name'],'message_text':content['message_text']})
-			socketio.emit('bot_msg', {'user_name':content['user_name'],'message_text':content['message_text'],'user_nick':content['user_nick']},namespace='/test')
+			socketio.emit('bot_msg', {'user_name':content['user_name'],'message_text':content['message_text'],'user_id':content['user_id']},namespace='/test')
 	return 'okay'	
 
 #---------------------------------------------
@@ -151,7 +151,7 @@ def users_handle():
 	print('New user in bot')
 	if request.method == 'POST':
 		content = request.get_json()
-		socketio.emit('newUserInBot', {'user_name':content['user_name'],'first_name':content['first_name']},namespace='/test')
+		socketio.emit('newUserInBot', {'user_id':content['user_id'],'first_name':content['first_name']},namespace='/test')
 	return 'okay'	
 
 #---------------------------------------------
@@ -175,21 +175,19 @@ def test_connect():
 
 @socketio.on('send_message', namespace='/test')
 def sending(mes):
-	cht_id=GetUserId(mes['username'])
-	users = db.messages.find({'user_id':cht_id}).limit(1) 
+	users = db.messages.find({'user_id':mes['user_id']}).limit(1) 
 	user =users[0]
 	db.messages.insert_one({'user_id': user['user_id'], 'user_name':user['user_name'], 'first_name':user['first_name'],'message_text':mes['message_text']})
 	socketio.emit('bot_msg', {'user_name':user['first_name'],'message_text':mes['message_text'],'user_nick':user['user_name']},namespace='/test')
 
-	bot.send_message(chat_id=cht_id, text=mes['message_text'])
+	bot.send_message(chat_id=mes['user_id'], text=mes['message_text'])
 
 
 @socketio.on('sendMessages', namespace='/test')
 def sendingAll(mes):
 	users = GetAllUsers()
 	for key,val in users.items():
-		cht_id = GetUserId(key)
-		bot.send_message(chat_id=cht_id, text=mes['message_text'])
+		bot.send_message(chat_id=mes['user_id'], text=mes['message_text'])
 	
 
 
