@@ -146,6 +146,15 @@ def jsonles_handle():
 	return 'okay'	
 
 #---------------------------------------------
+@app.route('/newUserInBot',methods=['POST'])
+def jsonles_handle():
+	print('New user in bot')
+	if request.method == 'POST':
+		content = request.get_json()
+		socketio.emit('newUserInBot', {'user_name':content['user_name'],'first_name':content['first_name']},namespace='/test')
+	return 'okay'	
+
+#---------------------------------------------
 @app.route('/statistics',methods=['GET','POST'])
 def statistics():
 	return render_template('statistics.html',async_mode=socketio.async_mode, mas=GetAllStat())
