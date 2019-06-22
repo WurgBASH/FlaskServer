@@ -285,7 +285,7 @@ nav img {
  * когда навигация раскрыта, распологаем внутри панели
 */
 
-[id='nav-toggle']:active ~ .nav > .nav-toggle {
+[id='nav-toggle'] ~ .nav > .nav-toggle {
     left: auto;
     right: 2px;
     top: 1em;
@@ -297,7 +297,7 @@ nav img {
  * используем псевдокласс:checked
  */
 
-[id='nav-toggle']:active ~ .nav {
+[id='nav-toggle'] ~ .nav {
     right: 0;
     box-shadow:-4px 0px 20px 0px rgba(0,0,0, 0.5);
     -moz-box-shadow:-4px 0px 20px 0px rgba(0,0,0, 0.5);
@@ -312,7 +312,7 @@ nav img {
  * фишка необязательная, на любителя
 */
 
-[id='nav-toggle']:active ~ main > article {
+[id='nav-toggle'] ~ main > article {
     -webkit-transform: translateX(-320px);
     -moz-transform: translateX(-320px);
     transform: translateX(-320px);
@@ -325,7 +325,7 @@ nav img {
  * вы можете испльзовать любой другой значок
 */
 
-[id='nav-toggle']:active ~ .nav > .nav-toggle:after {
+[id='nav-toggle'] ~ .nav > .nav-toggle:after {
     content: '\2715';
 }
 
@@ -408,7 +408,7 @@ body {
 
 /*плавное появление заголовка (логотипа) при раскрытии панели */
 
-[id='nav-toggle']:active ~ .nav h2 {
+[id='nav-toggle'] ~ .nav h2 {
     opacity: 1;
     transform: scale(1, 1);
     -ms-transform: scale(1, 1);
@@ -443,7 +443,7 @@ body {
     transition: opacity .5s .1s, transform .5s .1s;
 }
 
-[id='nav-toggle']:active ~ .nav > ul > li {
+[id='nav-toggle'] ~ .nav > ul > li {
     opacity: 1;
     -webkit-transform: translateX(0);
     -moz-transform: translateX(0);
