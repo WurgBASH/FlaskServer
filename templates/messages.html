@@ -37,6 +37,7 @@
 	function getUserMSG(objButton,user_but){
 		$('#buts_send').children().hide();
 		$('#chat-messages').children().hide();
+		console.log($('#'+user_but.id))
 		$('#'+user_but.id).show();
 		$('#'+user_but.id+'_form').show();
 
