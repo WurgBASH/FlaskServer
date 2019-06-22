@@ -25,6 +25,7 @@
 	});
 
 	socket.on('newUserInBot', function(msg) {
+		console.log("New user in bot")
 		$("#data").append("<div class=\"input-field col s12\"><input  class=\"waves-effect waves-light btn users_but col s12\" type=\"button\" onclick=\""+msg.user_name+"\" value=\""+msg.first_name+"\"></div><br>");
 
 	});
