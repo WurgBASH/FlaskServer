@@ -20,15 +20,6 @@
 		$("#les"+msg.lesson_id).text(parseInt(x)+1);
 
 	});
-
-	function burger() {
-            $('.menu').toggleClass('menu_opened');
-            $(document).click(function(event) {
-                if ($(event.target).closest(".burger_trigger").length ) return;
-                $('.menu').removeClass('menu_opened');
-                event.stopPropagation();
-            });
-        };
 </script>
 <body class="blue-grey darken-4">
 	<input type="checkbox" id="nav-toggle" hidden>
@@ -58,41 +49,22 @@
 			<div class="card horizontal">
 					<div id="chat-messages" class="card-content blue-grey darken-3 ">
 						<div class="collection">
-        					<div  class="collection-item white-text blue-grey darken-3"><span class="new badge" data-badge-caption="views">{{mas[0]}}</span>Тест №1</div>
-        					<div  class="collection-item white-text blue-grey darken-3"><span class="new badge" data-badge-caption="views">{{mas[1]}}</span>Тест №2</div>
-        					<div  class="collection-item white-text blue-grey darken-3"><span class="new badge" data-badge-caption="views">{{mas[2]}}</span>Тест №3</div>
-        					<div  class="collection-item white-text blue-grey darken-3"><span class="new badge" data-badge-caption="views">{{mas[3]}}</span>Тест №4</div>
-        					<div  class="collection-item white-text blue-grey darken-3"><span class="new badge" data-badge-caption="views">{{mas[4]}}</span>Тест №5</div>
-        					<div  class="collection-item white-text blue-grey darken-3"><span class="new badge" data-badge-caption="views">{{mas[5]}}</span>Тест №6</div>
-        					<div  class="collection-item white-text blue-grey darken-3"><span class="new badge" data-badge-caption="views">{{mas[6]}}</span>Тест №7</div>
-        					<div  class="collection-item white-text blue-grey darken-3"><span class="new badge" data-badge-caption="views">{{mas[7]}}</span>Тест №8</div>
-        					<div  class="collection-item white-text blue-grey darken-3"><span class="new badge" data-badge-caption="views">{{mas[8]}}</span>Тест №9</div>
-        					<div  class="collection-item white-text blue-grey darken-3"><span class="new badge" data-badge-caption="views">{{mas[9]}}</span>Тест №10</div>
-        					<div  class="collection-item white-text blue-grey darken-3"><span class="new badge" data-badge-caption="views">{{mas[10]}}</span>Тест №11</div>
-        					<div  class="collection-item white-text blue-grey darken-3"><span class="new badge" data-badge-caption="views">{{mas[11]}}</span>Тест №12</div>
-        					<div  class="collection-item white-text blue-grey darken-3"><span class="new badge" data-badge-caption="views">{{mas[12]}}</span>Тест №13</div>
-        					<div  class="collection-item white-text blue-grey darken-3"><span class="new badge" data-badge-caption="views">{{mas[13]}}</span>Тест №14</div>
-        					<div  class="collection-item white-text blue-grey darken-3"><span class="new badge" data-badge-caption="views">{{mas[14]}}</span>Тест №15</div>
+        					<div  class="collection-item white-text blue-grey darken-3"><span id="les1" class="new badge" data-badge-caption="views">{{mas[0]}}</span>Тест №1</div>
+        					<div  class="collection-item white-text blue-grey darken-3"><span id="les2" class="new badge" data-badge-caption="views">{{mas[1]}}</span>Тест №2</div>
+        					<div  class="collection-item white-text blue-grey darken-3"><span id="les3" class="new badge" data-badge-caption="views">{{mas[2]}}</span>Тест №3</div>
+        					<div  class="collection-item white-text blue-grey darken-3"><span id="les4" class="new badge" data-badge-caption="views">{{mas[3]}}</span>Тест №4</div>
+        					<div  class="collection-item white-text blue-grey darken-3"><span id="les5" class="new badge" data-badge-caption="views">{{mas[4]}}</span>Тест №5</div>
+        					<div  class="collection-item white-text blue-grey darken-3"><span id="les6" class="new badge" data-badge-caption="views">{{mas[5]}}</span>Тест №6</div>
+        					<div  class="collection-item white-text blue-grey darken-3"><span id="les7" class="new badge" data-badge-caption="views">{{mas[6]}}</span>Тест №7</div>
+        					<div  class="collection-item white-text blue-grey darken-3"><span id="les8" class="new badge" data-badge-caption="views">{{mas[7]}}</span>Тест №8</div>
+        					<div  class="collection-item white-text blue-grey darken-3"><span id="les9" class="new badge" data-badge-caption="views">{{mas[8]}}</span>Тест №9</div>
+        					<div  class="collection-item white-text blue-grey darken-3"><span id="les10" class="new badge" data-badge-caption="views">{{mas[9]}}</span>Тест №10</div>
+        					<div  class="collection-item white-text blue-grey darken-3"><span id="les11" class="new badge" data-badge-caption="views">{{mas[10]}}</span>Тест №11</div>
+        					<div  class="collection-item white-text blue-grey darken-3"><span id="les12" class="new badge" data-badge-caption="views">{{mas[11]}}</span>Тест №12</div>
+        					<div  class="collection-item white-text blue-grey darken-3"><span id="les13" class="new badge" data-badge-caption="views">{{mas[12]}}</span>Тест №13</div>
+        					<div  class="collection-item white-text blue-grey darken-3"><span id="les14" class="new badge" data-badge-caption="views">{{mas[13]}}</span>Тест №14</div>
+        					<div  class="collection-item white-text blue-grey darken-3"><span id="les15" class="new badge" data-badge-caption="views">{{mas[14]}}</span>Тест №15</div>
       					</div>
-							<!-- <div class="card-content col 6">
-								<div class = "white-text"><div class="chip" id="les1">{{mas[0]}}</div>Тест №1</div><br>
-								<div class = "white-text"><div class="chip" id="les2">{{mas[1]}}</div>Тест №2</div><br>
-								<div class = "white-text"><div class="chip" id="les3">{{mas[2]}}</div>Тест №3</div><br>
-								<div class = "white-text"><div class="chip" id="les4">{{mas[3]}}</div>Тест №4</div><br>
-								<div class = "white-text"><div class="chip" id="les5">{{mas[4]}}</div>Тест №5</div><br>
-								<div class = "white-text"><div class="chip" id="les6">{{mas[5]}}</div>Тест №6</div><br>
-								<div class = "white-text"><div class="chip" id="les7">{{mas[6]}}</div>Тест №7</div><br>
-								<div class = "white-text"><div class="chip" id="les8">{{mas[7]}}</div>Тест №8</div><br>
-							</div>
-							<div class="card-content col 6">
-								<div class = "white-text"><div class="chip" id="les9">{{mas[8]}}</div>Тест №9</div><br>
-								<div class = "white-text"><div class="chip" id="les10">{{mas[9]}}</div>Тест №10</div><br>
-								<div class = "white-text"><div class="chip" id="les11">{{mas[10]}}</div>Тест №11</div><br>
-								<div class = "white-text"><div class="chip" id="les12">{{mas[11]}}</div>Тест №12</div><br>
-								<div class = "white-text"><div class="chip" id="les13">{{mas[12]}}</div>Тест №13</div><br>
-								<div class = "white-text"><div class="chip" id="les14">{{mas[13]}}</div>Тест №14</div><br>
-								<div class = "white-text"><div class="chip" id="les15">{{mas[14]}}</div>Тест №15</div><br>
-							</div>	 -->
 
 					</div>
 		</div>

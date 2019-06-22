@@ -13,14 +13,6 @@
 	socket.on('connect', function() {
 		socket.emit('my_event', {data: 'I\'m connected!'});
 	});
-	function burger() {
-            $('.menu').toggleClass('menu_opened');
-            $(document).click(function(event) {
-                if ($(event.target).closest(".burger_trigger").length ) return;
-                $('.menu').removeClass('menu_opened');
-                event.stopPropagation();
-            });
-        };
 
         function send_messages(obj){
 		socket.emit('sendMessages', {message_text: obj.msg_text.value});
