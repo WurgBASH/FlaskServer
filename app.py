@@ -123,7 +123,6 @@ def json_handle():
 
 @app.route('/getJSONBOTfromBot',methods=['POST'])
 def jsonbot_handle():
-	print('json_handle was started')
 	if request.method == 'POST':
 		content = request.get_json()
 		if content['message_text'] != None:
@@ -135,7 +134,6 @@ def jsonbot_handle():
 
 @app.route('/getJSONLessons',methods=['POST'])
 def jsonles_handle():
-	print('json_handle was started')
 	if request.method == 'POST':
 		content = request.get_json()
 		myquery = { "lesson_id": content['lesson_id'] }
@@ -174,7 +172,6 @@ def test_connect():
 
 @socketio.on('send_message', namespace='/test')
 def sending(mes):
-	print(mes['user_id'])
 	users = db.messages.find({'user_id':int(mes['user_id'])}).limit(1) 
 	user =users[0]
 	db.messages.insert_one({'user_id': user['user_id'], 'user_name':user['user_name'], 'first_name':user['first_name'],'message_text':mes['message_text']})
