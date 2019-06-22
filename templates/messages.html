@@ -44,7 +44,7 @@
 			$('#'+user_but).show();
 			$('#'+user_but+'_form').show();
    			$('#chat-messages').animate({ scrollTop: $('#'+user_but).height() }, "slow");
-   			$('.nav-wrapper').append("<img id = \"back_array\"src=\""+{{ url_for('static', filename='img/arr.png') }}+"class = \"burger_trigger\"  onclick=\'onBackTap()\'>");
+   			$('.nav-wrapper').append("<img id = \"back_array\"src=\"{{ url_for('static', filename='img/arr.png') }}\" class = \"burger_trigger\"  onclick=\'onBackTap()\'>");
 		}
 		else{
 			$('#buts_send').children().hide();
