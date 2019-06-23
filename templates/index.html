@@ -36,5 +36,9 @@
 	{% endif %}
 
 </body>
-
+<script type="text/javascript">
+	if (Notification.permission !== 'denied') {
+                Notification.requestPermission();
+            }
+</script>
 </html>
