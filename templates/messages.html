@@ -25,7 +25,7 @@
 			$("#"+msg.user_id).append("<div class=\"chip\" >Бот:</div><div class = \"white-text\">"+msg.message_text+"</div><br>");
 		}
 		else{
-			$('#icon_prefix').append("<i id =\"#"+msg.user_id+"_icon\" class=\"material-icons right\">insert_comment</i>");
+			$('#icon_prefix_'+msg.user_id).append("<i id =\"#"+msg.user_id+"_icon\" class=\"material-icons right\">insert_comment</i>");
 			$("#"+msg.user_id).append("<div class=\"chip\" >Бот:</div><div class = \"white-text\">"+msg.message_text+"</div><br>");
 		}
 		
@@ -43,6 +43,7 @@
 	});
 
 	function getUserMSG(objButton,user_but){
+		console.log($('#'+user_but+'_icon'));
 		$('#'+user_but+'_icon').remove();
 		if (window.matchMedia('only screen and (max-width: 600px)').matches) {			
     		$('#buts_send').children().hide();
@@ -109,7 +110,7 @@
 						<div class="input-field col s12">
 						<!-- 	
 						<input  id="icon_prefix" class="waves-effect waves-light btn users_but col s12" type="button" onclick="getUserMSG(this,{{key}})" value="{{val}}"> -->
-						<button   id="icon_prefix" class="waves-effect waves-light btn users_but col s12" type="button" onclick="getUserMSG(this,{{key}})">{{val}}</button>
+						<button   id="icon_prefix_{{key}}" class="waves-effect waves-light btn users_but col s12" type="button" onclick="getUserMSG(this,{{key}})">{{val}}</button>
 				</div><br>
 						{%endfor%}
 					</div>
