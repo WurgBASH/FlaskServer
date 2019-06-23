@@ -43,7 +43,7 @@
 	});
 
 	function getUserMSG(objButton,user_but){
-		$("#"+msg.user_id+"_icon").hide();
+		$("#"+user_but+"_icon").hide();
 		if (window.matchMedia('only screen and (max-width: 600px)').matches) {			
     		$('#buts_send').children().hide();
 			$('#chat-messages').children().hide();
@@ -110,7 +110,7 @@
 						<!-- 	
 						<input  id="icon_prefix" class="waves-effect waves-light btn users_but col s12" type="button" onclick="getUserMSG(this,{{key}})" value="{{val}}"> -->
 						<button   id="icon_prefix_{{key}}" class="waves-effect waves-light btn users_but col s12" type="button" onclick="getUserMSG(this,{{key}})">{{val}}
-							<i id ="#{{key}}_icon" class="material-icons right" hidden>insert_comment</i>
+							<i id ="#{{key}}_icon" class="material-icons right" style="display:hidden">insert_comment</i>
 						</button>
 				</div><br>
 						{%endfor%}
